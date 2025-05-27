@@ -1,0 +1,50 @@
+{
+	"inputs": [
+      {
+        "type": "promptString",
+        "id": "github_token",
+        "description": "GitHub Personal Access Token",
+        "password": true
+      },      
+      {
+        "type": "promptString",
+        "id": "sqlite-nzwalks",
+        "description": "Main NZWalks SQLite Database Path (contains Regions, Walks, etc.)",
+        "default": "${workspaceFolder}/NZWalksDb.sqlite",
+      },
+      {
+        "type": "promptString",
+        "id": "sqlite-nzwalksauth",
+        "description": "Authentication SQLite Database Path (contains user data)",
+        "default": "${workspaceFolder}/NZWalksAuthDb.sqlite",
+      }
+    ],
+    "servers": {
+      "github": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "@modelcontextprotocol/server-github"
+        ],
+        "env": {
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "${input:github_token}"
+        }      
+      },        
+      "sqlite-nzwalks": {
+        "command": "uvx",
+        "args": [
+          "mcp-server-sqlite",
+          "--db-path",
+          "${input:sqlite-nzwalks}"
+        ]
+      },        
+      "sqlite-nzwalksauth": {
+        "command": "uvx",
+        "args": [
+          "mcp-server-sqlite",
+          "--db-path",
+          "${input:sqlite-nzwalksauth}"
+        ]
+      }
+    }
+}

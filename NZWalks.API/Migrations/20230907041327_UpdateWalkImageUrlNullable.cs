@@ -13,7 +13,7 @@ namespace NZWalks.API.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "WalkImageUrl",
                 table: "Walks",
-                type: "nvarchar(max)",
+                type: "TEXT",
                 nullable: true,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
@@ -25,7 +25,7 @@ namespace NZWalks.API.Migrations
             migrationBuilder.AlterColumn<string>(
                 name: "WalkImageUrl",
                 table: "Walks",
-                type: "nvarchar(max)",
+                type: "TEXT",
                 nullable: false,
                 defaultValue: "",
                 oldClrType: typeof(string),

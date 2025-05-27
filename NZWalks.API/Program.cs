@@ -60,12 +60,12 @@ builder.Services.AddDbContext<NZWalksDbContext>(options =>
 {
     options
         //.UseLazyLoadingProxies()
-        .UseSqlServer(builder.Configuration.GetConnectionString("NZWalksConnectionString"));
+        .UseSqlite(builder.Configuration.GetConnectionString("NZWalksConnectionString"));
 });
 
 builder.Services.AddDbContext<NZWalksAuthDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("NZWalksAuthConnectionstring"));
+    options.UseSqlite(builder.Configuration.GetConnectionString("NZWalksAuthConnectionstring"));
 });
 
 builder.Services.AddScoped<IRegionRepository, SQLRegionRepository>();

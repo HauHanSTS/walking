@@ -31,10 +31,8 @@ namespace NZWalks.API.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
-            throw new Exception("Serilog to file testing");
             var regions = await _regionRepository.GetAllAsync();
             var regionDtos = _mapper.Map<List<RegionDto>>(regions);
             return Ok(regionDtos);
@@ -42,7 +40,6 @@ namespace NZWalks.API.Controllers
 
         [HttpGet]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             var region = await _regionRepository.GetByIdAsync(id);
@@ -54,7 +51,6 @@ namespace NZWalks.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionRequestDto addRegionRequestDto)
         {
             var newRegion = _mapper.Map<Region>(addRegionRequestDto);
@@ -65,7 +61,6 @@ namespace NZWalks.API.Controllers
 
         [HttpPut]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateRegionRequestDto updateRegionRequestDto)
         {
             var region = await _regionRepository.UpdateAsync(id, _mapper.Map<Region>(updateRegionRequestDto));
@@ -78,7 +73,6 @@ namespace NZWalks.API.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
-        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var regionDomainModel = await _regionRepository.DeleteAsync(id);
