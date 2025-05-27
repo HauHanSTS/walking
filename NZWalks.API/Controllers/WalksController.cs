@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NZWalks.API.Models.Domain;
@@ -47,6 +48,25 @@ namespace NZWalks.API.Controllers
         {
             var walkDomainModel = await _walkRepository.GetByIdAsync(id);
             if (walkDomainModel == null) return NotFound();
+            return Ok(_mapper.Map<WalkDto>(walkDomainModel));
+        }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateWalkRequestDto updateWalkRequestDto)
+        {
+            // Convert DTO to Domain Model
+            var walkDomainModel = _mapper.Map<Walk>(updateWalkRequestDto);
+
+            walkDomainModel = await _walkRepository.UpdateAsync(id, walkDomainModel);
+
+            if (walkDomainModel == null)
+            {
+                return NotFound();
+            }
+
+            // Map Domain Model to DTO
             return Ok(_mapper.Map<WalkDto>(walkDomainModel));
         }
     }
